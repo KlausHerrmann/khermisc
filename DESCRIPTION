@@ -1,0 +1,21 @@
+Package: khermisc
+Title: Miscellaneous Functions for R
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Klaus",
+           family = "Herrmann",
+           role = c("aut", "cre"),
+           email = "klaus.herrmann@usherbrooke.ca",
+           comment = c(ORCID = "https://orcid.org/0000-0002-8044-5717"))
+Description: Provides (hopefully) useful functions for R without a special purpose.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    latex2exp,
+    covr
