@@ -1,7 +1,18 @@
 
-
-
-#output the contents of a numeric matrix or dataframe into LaTeX type table notation string
+#' Output the contents of a numeric matrix or dataframe into LaTeX type table notation string
+#'
+#' @param dframe A data.frame or matrix
+#' @param topLeft A string that will fill the top left corner (first cell of the first row) of the table
+#' @param fmt A parameter that gets passed to sprintf in case dframe is a numeric matrix
+#' @param header A boolean toggle. If true a full latex table with \begin{table} etc is created, if false only cells are converted.
+#' @return A vector of strings where each entry is one line of latex code.
+#' @examples
+#' n <- 3
+#' m <- 6
+#' M1 <- matrix(1:(n*m),n,m)
+#' rownames(M1) <- 1:n
+#' colnames(M1) <- 1:m
+#' S1 <- data.frame.to.latex.table.string(M1,topLeft="TL")
 #' @export
 data.frame.to.latex.table.string <- function(dframe,topLeft="",fmt="%f",header=TRUE){
 
@@ -98,7 +109,7 @@ example.matrix.and.data.frame.to.latex.table.string <- function(){
     write(S1,"")
     write("","")
 
-    S11 <- data.frame.to.latex.table.string(M1,topLeft="T1",fmt="%0.3f")
+    S11 <- data.frame.to.latex.table.string(M1,topLeft="T1",fmt="%0.3f",header=FALSE)
 
     write(S11,"")
     write("","")
@@ -113,8 +124,8 @@ example.matrix.and.data.frame.to.latex.table.string <- function(){
     #data frame
     M3 <- data.frame(letters[1:10],101:110,LETTERS[11:20])
     S3 <- data.frame.to.latex.table.string(M3,header=TRUE)
-    write(S3,file ="BBB.tex")
-
+    #write(S3,file ="BBB.tex")
+    write(S3,"")
 }
 
 
