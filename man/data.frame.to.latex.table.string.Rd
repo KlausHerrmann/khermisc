@@ -7,8 +7,8 @@
 data.frame.to.latex.table.string(
   dframe,
   topLeft = "",
-  fmt = "\%f",
-  header = TRUE
+  header = TRUE,
+  cellFormat = function(i, j, cell) {     return(cell) }
 )
 }
 \arguments{
@@ -16,9 +16,9 @@ data.frame.to.latex.table.string(
 
 \item{topLeft}{A string that will fill the top left corner (first cell of the first row) of the table}
 
-\item{fmt}{A parameter that gets passed to sprintf in case dframe is a numeric matrix}
+\item{header}{A boolean toggle. If true a full latex table with begin{table} etc is created, if false only cells are converted.}
 
-\item{header}{A boolean toggle. If true a full latex table with \begin{table} etc is created, if false only cells are converted.}
+\item{cellFormat}{A function that will convert the cell content to a latex compatible string. The function has to accept three arguments, row, column and cell value and has to return a string. It is applied to the cells (i,j > 0) and to the margins (i,j = 0) including topLeft which sits at (0,0).}
 }
 \value{
 A vector of strings where each entry is one line of latex code.

@@ -41,7 +41,7 @@ slurm.job.R <- function(maxTime,account,memory,modules,exports,scriptName,inputF
     
     strRun <- c("",
     paste("scriptName=",scriptName,sep=""),
-    paste("inputFile=",inputFolder,inputFile,".RData",sep=""),
+    paste("inputFile=",inputFolder,inputFile,sep=""),
     paste("outputFile=",outputFile,sep=""),
     "",
     paste("Rscript $scriptName $inputFile $outputFile",sep=""))

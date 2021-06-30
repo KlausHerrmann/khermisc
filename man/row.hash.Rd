@@ -9,6 +9,9 @@ row.hash(vec)
 \arguments{
 \item{vec}{A vector for which the hash is computed.}
 }
+\value{
+A hash value representing the vector.
+}
 \description{
 Compute hash value from a vector by collapsing it into one string
 }

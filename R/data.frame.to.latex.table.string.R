@@ -3,8 +3,8 @@
 #'
 #' @param dframe A data.frame or matrix
 #' @param topLeft A string that will fill the top left corner (first cell of the first row) of the table
-#' @param fmt A parameter that gets passed to sprintf in case dframe is a numeric matrix
-#' @param header A boolean toggle. If true a full latex table with \begin{table} etc is created, if false only cells are converted.
+#' @param header A boolean toggle. If true a full latex table with begin{table} etc is created, if false only cells are converted.
+#' @param cellFormat A function that will convert the cell content to a latex compatible string. The function has to accept three arguments, row, column and cell value and has to return a string. It is applied to the cells (i,j > 0) and to the margins (i,j = 0) including topLeft which sits at (0,0).
 #' @return A vector of strings where each entry is one line of latex code.
 #' @examples
 #' n <- 3
@@ -14,29 +14,14 @@
 #' colnames(M1) <- 1:m
 #' S1 <- data.frame.to.latex.table.string(M1,topLeft="TL")
 #' @export
-data.frame.to.latex.table.string <- function(dframe,topLeft="",fmt="%f",header=TRUE){
+data.frame.to.latex.table.string <- function(dframe,topLeft="",header=TRUE,cellFormat=function(i,j,cell){return(cell)}){
 
     stopifnot(is.data.frame(dframe)||is.matrix(dframe), is.logical(header), length(header)==1)
 
     strVarName <- deparse(substitute(dframe)) #get name of the input variable
-
-    #if we have a numeric matrix use sprintf to convert to strings
-    if (is.matrix(dframe)){
-
-        numCheck <- is.numeric(dframe) #FIX - FIND BETTER is.numeric FUNCTION MAYBE
-
-        rn <- rownames(dframe)
-        cn <- colnames(dframe)
-        dframe <- as.data.frame(dframe)
-
-        if (numCheck){
-            dframe <- lapply(dframe, sprintf, fmt = fmt)
-            dframe <- do.call(cbind, dframe)
-        }
-
-        rownames(dframe) <- rn
-        colnames(dframe) <- cn 
-    }
+ 
+    #if we have a matrix convert to data frame (gives automatic row and column names if they are not set)
+    if (is.matrix(dframe)){dframe <- as.data.frame(dframe)}
 
     n <- nrow(dframe)
     m <- ncol(dframe)
@@ -55,15 +40,18 @@ data.frame.to.latex.table.string <- function(dframe,topLeft="",fmt="%f",header=T
         cn <- paste("Col",1:m)
     }
 
-    #top row in the table
-    strOut <- paste(c(topLeft,cn), sep = "", collapse = " & ")
+    strOut <- cellFormat(0,0,topLeft) #format cell content according to user specification.
+    for (j in 1:m) {
+        cell.ij <- cellFormat(0,j,cn[j]) #format cell content according to user specification.
+        strOut <- paste(strOut,cell.ij,sep=" & ")
+    }
     vecOut[1] <- paste(strOut," \\\\",sep="")
 
     #fill all rows below
     for (i in 1:n) {
-        strOut <- rn[i]
+        strOut <- cellFormat(i,0,rn[i]) #format cell content according to user specification.
         for (j in 1:m) {
-            cell.ij <- dframe[i,j]
+            cell.ij <- cellFormat(i,j,dframe[i,j]) #format cell content according to user specification.
             strOut <- paste(strOut,cell.ij,sep=" & ")
         }
 
@@ -109,7 +97,8 @@ example.matrix.and.data.frame.to.latex.table.string <- function(){
     write(S1,"")
     write("","")
 
-    S11 <- data.frame.to.latex.table.string(M1,topLeft="T1",fmt="%0.3f",header=FALSE)
+    #S11 <- data.frame.to.latex.table.string(M1,topLeft="T1",fmt="%0.3f",header=FALSE)
+    S11 <- data.frame.to.latex.table.string(M1,topLeft="T1",header=FALSE)
 
     write(S11,"")
     write("","")
@@ -121,9 +110,25 @@ example.matrix.and.data.frame.to.latex.table.string <- function(){
     write(S2,"")
     write("","")
 
+
+    # example of a custom format function
+    myFormat <- function(i,j,cell){
+      #format only the contents of the data frame, not the row and column names
+      if (i > 0){
+        if (j > 0){
+          if (is.numeric(cell)){
+            return(sprintf(cell,fmt="%f")) #make gray if lower than ... or bold if higher than ...
+          }
+        }
+        
+      }
+      return(cell)
+    }
+
     #data frame
     M3 <- data.frame(letters[1:10],101:110,LETTERS[11:20])
-    S3 <- data.frame.to.latex.table.string(M3,header=TRUE)
+    #S3 <- data.frame.to.latex.table.string(M3,header=TRUE)
+    S3 <- data.frame.to.latex.table.string(M3,header=TRUE,topLeft="T1",cellFormat=myFormat)
     #write(S3,file ="BBB.tex")
     write(S3,"")
 }
