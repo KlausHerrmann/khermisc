@@ -50,7 +50,7 @@ chunkR <- function(x,chunkSize,overlap=0){
 #' @export
 chunk <- function(x,chunkSize,overlap=0,type="C++"){
 
-    stopifnot(overlap>=0,overlap<chunkSize,chunkSize>0)
+    stopifnot(overlap>=0,overlap<chunkSize,chunkSize>0,length(x)>0)
 
     if (type=="R"){
         return(chunkR(x=x,chunkSize=chunkSize,overlap=overlap))
