@@ -63,3 +63,43 @@ chunk <- function(x,chunkSize,overlap=0,type="C++"){
 
 
 }
+
+
+#' Return first line with NaN when using chunk
+#'
+#' @param x Length of input vector for chunk
+#' @param chunkSize Integer, size of each block.
+#' @param overlap Integer, number of overlapping data points.
+#' @param Returns 0 if no NaN values are imputed and an integer line number with the first imputed NaN value otherwise.
+#' @export
+chunk.NaN <- function(x,chunkSize,overlap=0){
+
+  stopifnot(overlap>=0,overlap<chunkSize,chunkSize>0,length(x)==1)
+  effectiveSize <- chunkSize-overlap
+  n <- x
+  
+  if (n%%effectiveSize==0){
+    m <- floor(n/effectiveSize)
+  }else{
+    m <- floor(n/effectiveSize)+1
+  }
+  
+  #chunks <- matrix(NA,m,chunkSize)
+  
+  #add entry to vector to avoid index out of bounds
+  highestIndex <- m*chunkSize - (m-1)*overlap #do a table to see that upperIndex takes this value in the last iteration
+  
+  nrNaN <- highestIndex-n
+
+  if (nrNaN == 0){
+    return(0)
+  }
+  nrLines <- nrNaN%/%effectiveSize
+  if (nrNaN%%effectiveSize>0){nrLines <- nrLines + 1}
+    return(m-nrLines+1)
+}
+
+
+
+
+

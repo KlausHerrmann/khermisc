@@ -2,6 +2,7 @@
 
 export(check.compute.plan)
 export(chunk)
+export(chunk.NaN)
 export(chunkCpp)
 export(chunkR)
 export(data.frame.to.latex.table.string)

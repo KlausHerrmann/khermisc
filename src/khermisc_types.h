@@ -9,12 +9,17 @@
 
 // we only include RcppEigen.h which pulls Rcpp.h in for us
 #include <RcppEigen.h>
+#define _USE_MATH_DEFINES
 
 
 /////////////////////////////////////////////
 // FILE NAME HAS TO BE packageName_types.h !!
 //https://stackoverflow.com/questions/42884946/compilation-error-using-rcpp-with-typedef
 /////////////////////////////////////////////
+
+
+//#include <iostream>
+//#include <Eigen/Dense>
 
 
 typedef double Double; //data type for double - long double slows down by 5 times
