@@ -10,6 +10,6 @@
 #' @docType khermisc
 #' @name khermisc
 #' @useDynLib khermisc, .registration=TRUE
-#' @importFrom Rcpp evalCpp
+#' @importFrom Rcpp evalCpp sourceCpp
 NULL
 #> NULL

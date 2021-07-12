@@ -13,6 +13,8 @@
 #include <limits> //for quiet nan
 #include "khermisc_types.h"
 
+using namespace Rcpp;
+
 //' @export
 // [[Rcpp::export]]
 DoubleMat chunkCpp(const DoubleVec & x, const Int & chunkSize, const Int & overlap){
@@ -39,11 +41,13 @@ DoubleMat chunkCpp(const DoubleVec & x, const Int & chunkSize, const Int & overl
 		vec.resize(highestIndex);
 		vec << x, tmp;
 	} else {
+		vec.resize(n);
 		vec << x;
 	}
 
 	Int i = 1;
 	for (Int k = 0; k < m; ++k) {
+
 		//Int upperIndex = i + chunkSize - 1;
 		chunks.row(k) = vec.segment(i-1,chunkSize);
 		i = i + effectiveSize;
@@ -51,8 +55,4 @@ DoubleMat chunkCpp(const DoubleVec & x, const Int & chunkSize, const Int & overl
 
 	return(chunks);
 }
-
-
-
-
 
