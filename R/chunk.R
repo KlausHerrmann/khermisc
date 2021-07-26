@@ -101,5 +101,47 @@ chunk.NaN <- function(x,chunkSize,overlap=0){
 
 
 
+#' Compute block maxima of a vector
+#'
+#' @param x Vector that is split into blocks
+#' @param blockSize Integer, size of each block.
+#' @param overlap Integer, number of overlapping data points.
+#' @param type Toggle between C++ ("C++") and R ("R"), see chunk.
+#' @param na.rm Boolean, is passed on to max
+#' @return Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk.
+#' @export
+blockMax <- function(x,blockSize,overlap=0,type="C++",na.rm=FALSE){
+  if (blockSize==1){return(list(firstNaN=0, blockMax=x))}
+  B <- chunk(x = x,chunkSize = blockSize, overlap = overlap, type = type)
+  chunkNaN <- chunk.NaN(x = length(x),chunkSize = blockSize, overlap = overlap)
+  M <- apply(B, 1, max, na.rm=na.rm)
+  return(list(firstNaN=chunkNaN, blockMax=M))
+}
+
+#' Compute block maxima of a vector via C++
+#'
+#' @param x Vector that is split into blocks
+#' @param blockSize Integer, size of each block.
+#' @param overlap Integer, number of overlapping data points.
+#' @param type Toggle between C++ ("C++") and R ("R"), see chunk.
+#' @param na.rm Boolean, is passed on to max
+#' @return Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk.
+#' @export
+blockMaxCpp <- function(x,blockSize,overlap=0,type="C++",na.rm=FALSE){
+  if (blockSize==1){return(list(firstNaN=0, blockMax=x))}
+  B <- chunk(x = x,chunkSize = blockSize, overlap = overlap, type = type)
+  chunkNaN <- chunk.NaN(x = length(x),chunkSize = blockSize, overlap = overlap)
+  #M <- apply(B, 1, max, na.rm=na.rm)
+  M <- rowMaxCpp(B)
+  return(list(firstNaN=chunkNaN, blockMax=M))
+}
+
+
+
+
+
+
+
+
 
 

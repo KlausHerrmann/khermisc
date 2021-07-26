@@ -30,14 +30,14 @@ DoubleMat chunkCpp(const DoubleVec & x, const Int & chunkSize, const Int & overl
 		
 	}
 
-	DoubleMat chunks = DoubleMat::Constant(m, chunkSize, std::numeric_limits<float>::quiet_NaN());
+	DoubleMat chunks = DoubleMat::Constant(m, chunkSize, std::numeric_limits<Double>::quiet_NaN());
 	
 	Int highestIndex = m*chunkSize - (m-1)*overlap; //do a table to see that upperIndex takes this value in the last iteration
 
 	DoubleVec vec;
 	if (highestIndex > n) {
 		Int tmpLength = highestIndex-n;
-		DoubleVec tmp = DoubleVec::Constant(tmpLength, std::numeric_limits<float>::quiet_NaN());
+		DoubleVec tmp = DoubleVec::Constant(tmpLength, std::numeric_limits<Double>::quiet_NaN());
 		vec.resize(highestIndex);
 		vec << x, tmp;
 	} else {
