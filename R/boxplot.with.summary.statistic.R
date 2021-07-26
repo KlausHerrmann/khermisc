@@ -9,25 +9,24 @@
 #' @param ... Parameters passed to boxplot
 #' @return A boxplot with the value of the summary statistic indicated.
 #' @export
-khBoxplot <- function(x,summaryFunc=mean,mpch=19,mcol="black",addSummary=TRUE,...){
-  
-    boxplot(x,...)
+boxplot <- function(x,summaryFunc=mean,mpch=19,mcol="black",addSummary=TRUE,...){
+    
+    graphics::boxplot(x,...)
   
   #add additional summary statistic (mean)
   if (addSummary){
 
-    if (is.list(x)){
+    if (is.list(x)){ #list or data.frame
       
         mVec <- sapply(x,summaryFunc)
     
-    } else if (is.matrix(x)){ #apply function per column
+    } else if (is.matrix(x)){ #apply function per column to the matrix
         
         mVec <- apply(x,MARGIN=2,FUN=summaryFunc)
 
-    } else {
+    } else { #apply the function - input should be a vector or scalar
       
-        mVec <- NA
-        warning("khBoxplot input is not a list, data.frame or matrix")
+        mVec <- summaryFunc(x)
 
     }
 
