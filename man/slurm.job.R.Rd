@@ -4,17 +4,7 @@
 \alias{slurm.job.R}
 \title{Builds a shell script that runs a job on a compute cluster}
 \usage{
-slurm.job.R(
-  maxTime,
-  account,
-  memory,
-  modules,
-  exports,
-  scriptName,
-  inputFile,
-  inputFolder,
-  outputFolder = ""
-)
+slurm.job.R(maxTime, account, memory, modules, exports, strRun)
 }
 \arguments{
 \item{maxTime}{A string specifying the maximum run time after which the job is canceled.}
@@ -27,13 +17,10 @@ slurm.job.R(
 
 \item{exports}{A vector of strings with exports.}
 
-\item{scriptName}{A string that identifies where the R script is located (full path).}
-
-\item{inputFile}{A string that identifies the input RData file (file name only).}
-
-\item{inputFolder}{A string that identifies the folder where the inputFile is located.}
-
-\item{outputFolder}{A string that identifies where the output file is located.}
+\item{strRun}{A vector of strings with the instructions (bash code) for the job.}
+}
+\value{
+A string that can be written with ... to a file
 }
 \description{
 Builds a shell script that runs a job on a compute cluster

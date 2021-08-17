@@ -125,7 +125,7 @@ blockMax <- function(x,blockSize,overlap=0,type="C++",na.rm=FALSE){
 #' @param overlap Integer, number of overlapping data points.
 #' @param type Toggle between C++ ("C++") and R ("R"), see chunk.
 #' @param na.rm Boolean, is passed on to max
-#' @return Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk.
+#' @return Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk. If there is no NaN value the indicator is zero. For the computation all NA and NaN values are ignored.
 #' @export
 blockMaxCpp <- function(x,blockSize,overlap=0,type="C++",na.rm=FALSE){
   if (blockSize==1){return(list(firstNaN=0, blockMax=x))}

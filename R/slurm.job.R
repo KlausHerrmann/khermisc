@@ -5,16 +5,10 @@
 #' @param memory A string specifying the memory requirements for the job.
 #' @param modules A vector of strings with the modules.
 #' @param exports A vector of strings with exports.
-#' @param scriptName A string that identifies where the R script is located (full path).
-#' @param inputFile A string that identifies the input RData file (file name only).
-#' @param inputFolder A string that identifies the folder where the inputFile is located.
-#' @param outputFolder A string that identifies where the output file is located.
+#' @param strRun A vector of strings with the instructions (bash code) for the job.
+#' @return A string that can be written with writeLines to a .sh file that can be executed on a cluster.
 #' @export
-slurm.job.R <- function(maxTime,account,memory,modules,exports,scriptName,inputFile,inputFolder,outputFolder=""){
-
-    if (outputFolder==""){
-        outputFolder=inputFolder
-    }
+slurm.job.R <- function(maxTime,account,memory,modules,exports,strRun){
 
     strSbatch <- c(
     "#!/bin/bash",
@@ -36,17 +30,7 @@ slurm.job.R <- function(maxTime,account,memory,modules,exports,scriptName,inputF
         }
     }
 
-    #remove .RData ending to be able to define the output file
-    outputFile <- paste(outputFolder,tools::file_path_sans_ext(inputFile),"_out_${SLURM_JOBID}.RData",sep="")
-    
-    strRun <- c("",
-    paste("scriptName=",scriptName,sep=""),
-    paste("inputFile=",inputFolder,inputFile,sep=""),
-    paste("outputFile=",outputFile,sep=""),
-    "",
-    paste("Rscript $scriptName $inputFile $outputFile",sep=""))
-
-    strFinal <- c(strSbatch,strModule,strExport,strRun)
+    strFinal <- c(strSbatch,strModule,strExport,"",strRun)
 }
 
 
