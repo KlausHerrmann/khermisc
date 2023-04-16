@@ -9,7 +9,7 @@
 #' @param ... Parameters passed to boxplot
 #' @return A boxplot with the value of the summary statistic indicated.
 #' @export
-boxplot <- function(x,summaryFunc=mean,mpch=19,mcol="black",addSummary=TRUE,...){
+myBoxplot <- function(x,summaryFunc=mean,mpch=19,mcol="black",addSummary=TRUE,...){
     
     graphics::boxplot(x,...)
   
