@@ -18,7 +18,7 @@ blockMaxCpp(x, blockSize, overlap = 0, type = "C++", na.rm = FALSE)
 \item{na.rm}{Boolean, is passed on to max}
 }
 \value{
-Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk.
+Returns List, with the maximum per block (blockMax) and an indicator if chunk has produced NaN values. Then the index of the first NaN (firstNaN) is returned. This happens if the blockSize does not divide the length of x without remainder; see chunk. If there is no NaN value the indicator is zero. For the computation all NA and NaN values are ignored.
 }
 \description{
 Compute block maxima of a vector via C++

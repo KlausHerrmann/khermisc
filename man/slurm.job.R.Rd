@@ -4,7 +4,14 @@
 \alias{slurm.job.R}
 \title{Builds a shell script that runs a job on a compute cluster}
 \usage{
-slurm.job.R(maxTime, account, memory, modules, exports, strRun)
+slurm.job.R(
+  maxTime,
+  account,
+  memory,
+  modules = slurm.job.standard.modules(),
+  exports = slurm.job.standard.exports(),
+  strRun
+)
 }
 \arguments{
 \item{maxTime}{A string specifying the maximum run time after which the job is canceled.}
@@ -20,7 +27,7 @@ slurm.job.R(maxTime, account, memory, modules, exports, strRun)
 \item{strRun}{A vector of strings with the instructions (bash code) for the job.}
 }
 \value{
-A string that can be written with ... to a file
+A string that can be written with writeLines to a .sh file that can be executed on a cluster.
 }
 \description{
 Builds a shell script that runs a job on a compute cluster

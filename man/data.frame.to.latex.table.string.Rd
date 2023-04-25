@@ -8,7 +8,9 @@ data.frame.to.latex.table.string(
   dframe,
   topLeft = "",
   header = TRUE,
-  cellFormat = function(i, j, cell) {     return(cell) }
+  cellFormat = function(i, j, cell) {
+     return(cell)
+ }
 )
 }
 \arguments{
