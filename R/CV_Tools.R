@@ -292,7 +292,7 @@ formatOtherMD <- function(lstOther){
 conferenceDetails <- function(xmlNode,strLanguage=".//eng"){
     require(xml2)
     details <- xml2::xml_find_all(xmlNode, strLanguage)
-    nrDetails <- length(xmlPoster)
+    nrDetails <- length(xmlNode)
 
     if (nrDetails != 1 ){
         stop()
@@ -331,7 +331,7 @@ xml2lstPoster <- function(xmlPoster,dateFormat="%Y/%m/%d", strLanguage=".//eng")
     stop <- xml2::xml_attr(xmlPoster,"stop")
     stop <- as.Date(stop,format=dateFormat)
 
-    details <- posterDetails(xmlPoster,strLanguage)
+    details <- conferenceDetails(xmlPoster,strLanguage)
 
     data <- list(type=type, date=date, title=title, start=start, stop=stop, event=details$event, location=details$location, misc=details$misc)
 }
@@ -411,7 +411,7 @@ xml2lstPresentation <- function(xmlPresentation,dateFormat="%Y/%m/%d", strLangua
     stop <- xml2::xml_attr(xmlPresentation,"stop")
     stop <- as.Date(stop,format=dateFormat)
 
-    details <- presentationDetails(xmlPresentation,strLanguage)
+    details <- conferenceDetails(xmlPresentation,strLanguage)
 
     data <- list(type=type, date=date, title=title, start=start, stop=stop, event=details$event, location=details$location, misc=details$misc)
 }

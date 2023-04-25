@@ -31,7 +31,7 @@ data.frame.to.html.table.string(
 \item{header}{A boolean toggle. If true a full latex table with begin{table} etc is created, if false only cells are converted.}
 }
 \value{
-A vector of strings where each entry is one line of latex code.
+A vector of strings where each entry is one line of html code.
 }
 \description{
 Output the contents of a numeric matrix or dataframe into html table notation string
