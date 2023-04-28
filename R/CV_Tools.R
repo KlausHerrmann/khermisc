@@ -349,7 +349,7 @@ xml2lstPoster <- function(xmlPoster,dateFormat="%Y/%m/%d", strLanguage=".//eng")
 #' @return A string in the markdown format with a standard citation for the poster
 #' @export
 #' @author Klaus Herrmann
-formatPosterMD <- function(lstPoster, strSetlocale=c("LC_ALL","en_US.UTF-8")){
+formatPosterMD <- function(lstPoster, strSetlocale=c("LC_ALL","en_US.UTF-8"),miscCol="darkred"){
     Sys.setlocale(strSetlocale[1],strSetlocale[2])
     outString <- paste("**",lstPoster$title,"**",sep="")
 
@@ -377,7 +377,7 @@ formatPosterMD <- function(lstPoster, strSetlocale=c("LC_ALL","en_US.UTF-8")){
 
     if (is.na(lstPoster$misc)==FALSE){
         if (lstPoster$misc != ""){
-            outString <- paste(outString," <span style=\"color:darkred\">*",lstPoster$misc,"*.</span>",sep="")
+            outString <- paste(outString," <span style=\"color:",miscCol,"\">*",lstPoster$misc,"*.</span>",sep="")
         }
     }
 
@@ -429,7 +429,7 @@ xml2lstPresentation <- function(xmlPresentation,dateFormat="%Y/%m/%d", strLangua
 #' @return A string in the markdown format with a standard citation for the talk
 #' @export
 #' @author Klaus Herrmann
-formatPresentationMD <- function(lstPresentation, strSetlocale=c("LC_ALL","en_US.UTF-8")){
+formatPresentationMD <- function(lstPresentation, strSetlocale=c("LC_ALL","en_US.UTF-8"),miscCol="darkred"){
     Sys.setlocale(strSetlocale[1],strSetlocale[2])
     outString <- paste("**",lstPresentation$title,"**",sep="")
 
@@ -457,7 +457,7 @@ formatPresentationMD <- function(lstPresentation, strSetlocale=c("LC_ALL","en_US
 
     if (is.na(lstPresentation$misc)==FALSE){
         if (lstPresentation$misc != ""){
-            outString <- paste(outString," <span style=\"color:darkred\">*",lstPresentation$misc,"*.</span>",sep="")
+            outString <- paste(outString," <span style=\"color:",miscCol,"\">*",lstPresentation$misc,"*.</span>",sep="")
         }
     }
 
